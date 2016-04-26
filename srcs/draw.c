@@ -29,7 +29,7 @@ void				put_pixel(t_img *img, t_vec2 p, int color)
 void				draw_line_pta(t_img *img, t_vec2 a, t_vec2 b,
 		int color)
 {
-	t_vec			p;
+	t_vec2			p;
 
 	p.x = a.x;
 	while (p.x < b.x)
@@ -43,7 +43,7 @@ void				draw_line_pta(t_img *img, t_vec2 a, t_vec2 b,
 void				draw_line_ptb(t_img *img, t_vec2 a, t_vec2 b,
 		int color)
 {
-	t_vec			p;
+	t_vec2			p;
 
 	p.y = a.y;
 	while (p.y < b.y)
@@ -55,34 +55,39 @@ void				draw_line_ptb(t_img *img, t_vec2 a, t_vec2 b,
 
 }
 
-void				draw_line(t_params *e, t_vec2 a, t_vec2 b, int color)
+void				draw_line(t_conf *conf, t_vec2 a, t_vec2 b, int color)
 {
-	t_vec			p;
+	t_vec2			p;
 
-	a.x = ((a.x + e->offset.x) * e->zoom);
-	a.y = ((a.y + e->offset.y) * e->zoom);
-	b.x = ((b.x + e->offset.x) * e->zoom);
-	b.y = ((b.y + e->offset.y) * e->zoom);
 	p.x = a.x - b.x;
 	p.y = a.y - b.y;
 	p.x < 0 ? p.x = -p.x : p.x;
 	p.y < 0 ? p.y = -p.y : p.y;
 	if (p.x > p.y)
 		if (a.x <= b.x)
-			draw_line_pta(&e->img, a, b, color);
+			draw_line_pta(&conf->img, a, b, color);
 		else
-			draw_line_pta(&e->img, b, a, color);
+			draw_line_pta(&conf->img, b, a, color);
 	else
 		if (a.y < b.y)
-			draw_line_ptb(&e->img, a, b, color);
+			draw_line_ptb(&conf->img, a, b, color);
 		else
-			draw_line_ptb(&e->img, b, a, color);
+			draw_line_ptb(&conf->img, b, a, color);
 }
 
 void				draw_obj(t_conf conf)
 {
-	while (conf->obj->next != NULL)
+	while (conf.obj != NULL)
 	{
-		
+		if (conf.obj->c_vertex.y != 0)
+			draw_line(&conf, orthographic(conf, conf.obj->c_vertex),
+					  orthographic(conf, conf.obj->p_vertex->c_vertex),
+					  0xFF8865);
+		if (conf.obj->next != NULL &&
+			 conf.obj->next->c_vertex.y == conf.obj->c_vertex.y)
+			draw_line(&conf, orthographic(conf, conf.obj->c_vertex),
+					  orthographic(conf, conf.obj->next->c_vertex),
+					  0x998535);
+		conf.obj = conf.obj->next;
 	}
 }

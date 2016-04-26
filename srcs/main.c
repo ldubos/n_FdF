@@ -32,7 +32,9 @@ int					main(int ac, char **av)
 	arg_error(ac);
 	init_conf(&conf);
 	read_obj(&conf, av[1]);
-	/* mlx_hook(); */
+	draw_obj(conf);
+	mlx_put_image_to_window(conf.env.mlx, conf.env.win, conf.img.img, 0, 0);
+	mlx_hook(conf.env.win, 2, 1, key_hook, &conf);
 	mlx_loop(conf.env.mlx);
 	return (0);
 }

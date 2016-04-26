@@ -7,8 +7,13 @@
 # include <stdlib.h>
 # include <math.h>
 
+# include <stdio.h>
+
 # include "libft.h"
 # include "get_next_line.h"
+
+# define WIDTH 1920
+# define HEIGHT 1080
 
 typedef struct	s_env
 {
@@ -129,5 +134,11 @@ t_vec2				orthographic(t_conf conf, t_vec3 vertex);
 */
 
 void				draw_obj(t_conf conf);
+
+/*
+** hook.c
+*/
+
+int					key_hook(int keycode, t_conf *conf);
 
 #endif

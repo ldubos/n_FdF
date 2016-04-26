@@ -19,7 +19,8 @@ SRCS=$(SRCS_DIR)main.c \
 	 $(SRCS_DIR)error.c \
 	 $(SRCS_DIR)obj.c \
 	 $(SRCS_DIR)hook.c \
-	 $(SRCS_DIR)draw.c
+	 $(SRCS_DIR)draw.c \
+	 $(SRCS_DIR)matrix.c
 OBJS=$(SRCS:.c=.o)
 	INC_DIR=-I./includes/ -I./libft/includes/
 	LIB_DIR=-L./libft -lft $(MLX)
