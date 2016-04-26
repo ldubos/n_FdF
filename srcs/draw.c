@@ -13,7 +13,7 @@
 #include "fdf.h"
 #include <stdio.h>
 
-void				put_pixel(t_img *img, t_vec p, int color)
+void				put_pixel(t_img *img, t_vec2 p, int color)
 {
 	char			*pixel;
 
@@ -26,7 +26,7 @@ void				put_pixel(t_img *img, t_vec p, int color)
 	}
 }
 
-void				draw_line_pta(t_img *img, t_vec a, t_vec b,
+void				draw_line_pta(t_img *img, t_vec2 a, t_vec2 b,
 		int color)
 {
 	t_vec			p;
@@ -40,7 +40,7 @@ void				draw_line_pta(t_img *img, t_vec a, t_vec b,
 	}
 }
 
-void				draw_line_ptb(t_img *img, t_vec a, t_vec b,
+void				draw_line_ptb(t_img *img, t_vec2 a, t_vec2 b,
 		int color)
 {
 	t_vec			p;
@@ -55,7 +55,7 @@ void				draw_line_ptb(t_img *img, t_vec a, t_vec b,
 
 }
 
-void				draw_line(t_params *e, t_vec a, t_vec b, int color)
+void				draw_line(t_params *e, t_vec2 a, t_vec2 b, int color)
 {
 	t_vec			p;
 
@@ -79,27 +79,10 @@ void				draw_line(t_params *e, t_vec a, t_vec b, int color)
 			draw_line_ptb(&e->img, b, a, color);
 }
 
-#include <stdio.h>
-
-void				draw_obj(t_params *e)
+void				draw_obj(t_conf conf)
 {
-	int				x;
-	int				y;
-
-	y = 0;
-	while (y < e->t_y)
+	while (conf->obj->next != NULL)
 	{
-		x = 0;
-		while (x < e->t_x)
-		{
-			if (x + 1 <= e->t_x)
-				draw_line(e, obj_to_iso(e, e->obj[y][x]),
-						obj_to_iso(e, e->obj[y][x + 1]), 0xFFFFFF);
-			if (y - 1 >= 0)
-				draw_line(e, obj_to_iso(e, e->obj[y][x]),
-						obj_to_iso(e, e->obj[y - 1][x]), 0xFF5555);
-			++x;
-		}
-		++y;
+		
 	}
 }

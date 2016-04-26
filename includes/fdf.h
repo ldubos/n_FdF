@@ -10,23 +10,11 @@
 # include "libft.h"
 # include "get_next_line.h"
 
-typedef struct	s_env t_env;
-typedef struct	s_img t_img;
-typedef struct	s_vec3 t_vec3;
-typedef struct	s_vec2 t_vec2;
-typedef struct	s_matrix4x4 t_matrix4x4;
-typedef struct	s_obj t_obj;
-typedef struct	s_conf t_conf;
-
-/*
-** Structs declaration
-*/
-
 typedef struct	s_env
 {
 	void		*mlx;
 	void		*win;
-};
+}				t_env;
 
 typedef struct	s_img
 {
@@ -36,20 +24,20 @@ typedef struct	s_img
 	int			sl;
 	int			endian;
 
-};
+}				t_img;
 
 typedef struct	s_vec3
 {
 	int			x;
 	int			y;
 	int			z;
-};
+}				t_vec3;
 
 typedef struct	s_vec2
 {
 	int			x;
 	int			y;
-};
+}				t_vec2;
 
 /*
 **     Rotation    => M11, M12, M13,
@@ -86,14 +74,16 @@ typedef struct	s_matrix4x4
 	float		m42;
 	float		m43;
 	float		m44;
-};
+}				t_matrix4x4;
 
 typedef struct	s_obj
 {
-	t_obj		*p_vertex;
+	struct s_obj \
+	*p_vertex;
 	t_vec3		c_vertex;
-	t_obj		*next;
-};
+	struct s_obj \
+	*next;
+}				t_obj;
 
 typedef struct	s_conf
 {
@@ -101,12 +91,12 @@ typedef struct	s_conf
 	t_img		img;
 	t_matrix4x4	matrix;
 	t_obj		*obj;
-	t_vec2		offset;
+/*	t_vec2		offset; */
 	t_vec2		pos;
 	int			zoom;
 	int			width;
 	int			height;
-};
+}				t_conf;
 
 /*
 ** error.c
@@ -118,9 +108,26 @@ void				gnl_error(int err);
 void				malloc_error();
 
 /*
+** matrix.c
+*/
+
+void               translation(t_conf conf, t_vec3 *vertex);
+void               scale(t_conf conf, t_vec3 *vertex);
+void               rot_x(t_conf conf, t_vec3 *vertex);
+void               rot_y(t_conf conf, t_vec3 *vertex);
+void               rot_z(t_conf conf, t_vec3 *vertex);
+
+/*
 ** obj.c
 */
 
 void				read_obj(t_conf *conf, char *path);
+t_vec2				orthographic(t_conf conf, t_vec3 vertex);
+
+/*
+** draw.c
+*/
+
+void				draw_obj(t_conf conf);
 
 #endif
