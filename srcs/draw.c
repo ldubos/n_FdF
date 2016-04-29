@@ -26,7 +26,7 @@ void				put_pixel(t_img *img, t_vec2 p, int color)
 	}
 }
 
-void				draw_line_pta(t_img *img, t_vec2 a, t_vec2 b,
+void				draw_line_pta(t_img *img, t_vec3 a, t_vec3 b,
 		int color)
 {
 	t_vec2			p;
@@ -40,7 +40,7 @@ void				draw_line_pta(t_img *img, t_vec2 a, t_vec2 b,
 	}
 }
 
-void				draw_line_ptb(t_img *img, t_vec2 a, t_vec2 b,
+void				draw_line_ptb(t_img *img, t_vec3 a, t_vec3 b,
 		int color)
 {
 	t_vec2			p;
@@ -55,7 +55,7 @@ void				draw_line_ptb(t_img *img, t_vec2 a, t_vec2 b,
 
 }
 
-void				draw_line(t_conf *conf, t_vec2 a, t_vec2 b, int color)
+void				draw_line(t_conf *conf, t_vec3 a, t_vec3 b, int color)
 {
 	t_vec2			p;
 
@@ -75,19 +75,17 @@ void				draw_line(t_conf *conf, t_vec2 a, t_vec2 b, int color)
 			draw_line_ptb(&conf->img, b, a, color);
 }
 
-void				draw_obj(t_conf conf)
+void				draw_obj(t_conf *conf)
 {
-	while (conf.obj != NULL)
+	t_obj			*tmp;
+
+	tmp = *conf->obj;
+	while (tmp != NULL)
 	{
-		if (conf.obj->c_vertex.y != 0)
-			draw_line(&conf, orthographic(conf, conf.obj->c_vertex),
-					  orthographic(conf, conf.obj->p_vertex->c_vertex),
-					  0xFF8865);
-		if (conf.obj->next != NULL &&
-			 conf.obj->next->c_vertex.y == conf.obj->c_vertex.y)
-			draw_line(&conf, orthographic(conf, conf.obj->c_vertex),
-					  orthographic(conf, conf.obj->next->c_vertex),
-					  0x998535);
-		conf.obj = conf.obj->next;
+		if (tmp->c_vertex.y != 0)
+			draw_line(conf, tmp->c_vertex, tmp->p_vertex->c_vertex, 0xFF8865);
+		if (tmp->next != NULL && tmp->next->c_vertex.y == tmp->c_vertex.y)
+			draw_line(conf, tmp->c_vertex, tmp->next->c_vertex, 0x998535);
+		tmp = tmp->next;
 	}
 }

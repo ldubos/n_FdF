@@ -12,37 +12,85 @@
 
 #include "fdf.h"
 
-void               translation(t_conf conf, t_vec3 *vertex)
+void				translation(t_matrix4x4 matrix, t_obj *obj)
 {
-    ((*(vertex))).x += conf.matrix.m14;
-    ((*(vertex))).y += conf.matrix.m24;
-    ((*(vertex))).z += conf.matrix.m34;
+
+	t_obj			*tmp;
+
+	tmp = obj;
+	while (tmp != NULL)
+	{
+    	tmp->c_vertex.x += matrix.m14;
+    	tmp->c_vertex.y += matrix.m24;
+    	tmp->c_vertex.z += matrix.m34;
+		tmp = tmp->next;
+	}
 }
 
-void               scale(t_conf conf, t_vec3 *vertex)
+void				scale(t_matrix4x4 matrix, t_obj *obj)
 {
-    ((*(vertex))).x *= conf.matrix.m11;
-    ((*(vertex))).y *= conf.matrix.m22;
-    ((*(vertex))).z *= conf.matrix.m33;
+	t_obj			*tmp;
+
+	tmp = obj;
+	while (tmp != NULL)
+	{
+    	tmp->c_vertex.x *= matrix.m11;
+    	tmp->c_vertex.y *= matrix.m22;
+    	tmp->c_vertex.z *= matrix.m33;
+		tmp = tmp->next;
+	}
 }
 
-void               rot_x(t_conf conf, t_vec3 *vertex)
+void				rot_x(/*t_matrix4x4 matrix, */t_obj *obj, int angl)
 {
-    ((*(vertex))).x += conf.matrix.m11;
-    ((*(vertex))).y += cos(conf.matrix.m22) - sin(conf.matrix.m23);
-    ((*(vertex))).z += sin(conf.matrix.m32) + cos(conf.matrix.m33);
+	t_obj			*tmp;
+
+	tmp = obj;
+	while (tmp != NULL)
+	{
+/*    	tmp->c_vertex.x += matrix.m11;
+    	tmp->c_vertex.y += cos(matrix.m22) - sin(matrix.m23);
+    	tmp->c_vertex.z += sin(matrix.m32) + cos(matrix.m33);
+		tmp = tmp->next;*/
+		tmp->c_vertex.x += tmp->c_vertex.x;
+		tmp->c_vertex.y += cos(angl) - sin(angl);
+		tmp->c_vertex.z += sin(angl) + cos(angl);
+		tmp = tmp->next;
+	}
 }
 
-void               rot_y(t_conf conf, t_vec3 *vertex)
+void				rot_y(/*t_matrix4x4 matrix, */t_obj *obj, int angl)
 {
-    ((*(vertex))).x += cos(conf.matrix.m11) + sin(conf.matrix.m13);
-    ((*(vertex))).y += conf.matrix.m22;
-    ((*(vertex))).z += -sin(conf.matrix.m31) + cos(conf.matrix.m33);
+	t_obj			*tmp;
+
+	tmp = obj;
+	while (tmp != NULL)
+	{
+/*    	tmp->c_vertex.x += cos(matrix.m11) + sin(matrix.m13);
+    	tmp->c_vertex.y += matrix.m22;
+    	tmp->c_vertex.z += -sin(matrix.m31) + cos(matrix.m33);
+		tmp = tmp->next;*/
+		tmp->c_vertex.x += cos(angl) + sin(angl);
+		tmp->c_vertex.y += tmp->c_vertex.y;
+		tmp->c_vertex.z += -sin(angl) + cos(angl);
+		tmp = tmp->next;
+	}
 }
 
-void               rot_z(t_conf conf, t_vec3 *vertex)
+void				rot_z(/*t_matrix4x4 matrix, */t_obj *obj, int angl)
 {
-    ((*(vertex))).x += cos(conf.matrix.m11) - sin(conf.matrix.m12);
-    ((*(vertex))).y += sin(conf.matrix.m21) + cos(conf.matrix.m22);
-    ((*(vertex))).z += conf.matrix.m33;
+	t_obj			*tmp;
+
+	tmp = obj;
+	while (tmp != NULL)
+	{
+/*    	tmp->c_vertex.x += cos(matrix.m11) - sin(matrix.m12);
+    	tmp->c_vertex.y += sin(matrix.m21) + cos(matrix.m22);
+    	tmp->c_vertex.z += matrix.m33;
+		tmp = tmp->next;*/
+		tmp->c_vertex.x += cos(angl) - sin(angl);
+		tmp->c_vertex.y += sin(angl) + cos(angl);
+		tmp->c_vertex.z += tmp->c_vertex.z;
+		tmp = tmp->next;
+	}
 }

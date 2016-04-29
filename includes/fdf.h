@@ -116,11 +116,11 @@ void				malloc_error();
 ** matrix.c
 */
 
-void               translation(t_conf conf, t_vec3 *vertex);
-void               scale(t_conf conf, t_vec3 *vertex);
-void               rot_x(t_conf conf, t_vec3 *vertex);
-void               rot_y(t_conf conf, t_vec3 *vertex);
-void               rot_z(t_conf conf, t_vec3 *vertex);
+void               translation(t_matrix4x4 matrix, t_obj *obj);
+void               scale(t_matrix4x4 matrix, t_obj *obj);
+void               rot_x(t_obj *obj, int angl);
+void               rot_y(t_obj *obj, int angl);
+void               rot_z(t_obj *obj, int angl);
 
 /*
 ** obj.c
